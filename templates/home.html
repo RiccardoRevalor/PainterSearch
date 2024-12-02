@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricerca Pittore</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h1 class="text-center">Ricerca Pittore</h1>
+            </div>
+            <div class="card-body">
+                <form id= "searchForm" method="POST">
+                    <div class="mb-3">
+                        <label for="pittore" class="form-label">Inserisci il nome del pittore:</label>
+                        <input type="text" name="pittore" id="pittore" class="form-control" placeholder="Es: A. Alciati" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Cerca</button>
+                </form>
+            </div>
+        </div>
+
+    <!--- Show te results-->
+    <div id="results_error" class="mt-4"></div>
+
+
+    <table id="results_success" class="table table-bordered mt-4" style="display: none;">
+        <thead>
+            <tr>
+                <th>Pittore</th>
+                <th>Numero libro</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--here I will pupulate the table with the results using AJAX-->
+        </tbody>
+    </table>
+
+
+    <div class="text-center mt-3">
+        <a class="text-muted" href="https://github.com/RiccardoRevalor">Created by @RiccardoRevalor</a>
+    </div>
+
+
+    </div>
+
+
+
+
+
+
+    <!-- Bootstrap JS + JQUERY -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#searchForm').submit(function (event) {
+                event.preventDefault();  // Evita che il form faccia il submit normalmente
+
+                var pittore = $('#pittore').val();  // Ottieni il nome del pittore
+
+                $.ajax({
+                    url: '/search',
+                    type: 'POST',
+                    data: { pittore: pittore },
+                    success: function (response) {
+                        if (response.status === "success") {
+                            console.log("SI")
+                            console.log(response.data);
+                            $('#results_error').html(""); 
+                            $('#results_error').hide();
+                            $('#results_success').show();  // Mostra la tabella
+                            $('#results_success tbody').empty();  // Pulisci la tabella
+
+                            // Aggiungi i risultati nella tabella
+                            response.data.forEach(function (item) {
+                                $('#results_success tbody').append(
+                                    `<tr><td>${item['Pittore']}</td><td>${item['Numero libro']}</td></tr>`
+                                );
+                            });
+                        } else {
+                            console.log("NO")
+                            $('#results_error').html('<div class="alert alert-warning">Nessun pittore trovato!</div>');
+                            $('#results_success').hide();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
