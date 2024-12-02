@@ -1,0 +1,44 @@
+body {
+    font-family: 'Poppins', 'Open Sans', Arial, Helvetica, sans-serif;
+    background-color: #f8f9fa;
+}
+
+#submit-btn {
+    font-size: larger;
+}
+
+#results_success {
+    font-size: x-large;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif !important;
+}
+
+#results_error {
+    font-size: x-large;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif !important;
+    font-style: bold;
+}
+
+#author-link {
+    font-size: small;
+    font-style: italic;
+}
+
+.form-label{
+    font-size: larger;
+}
+
+#pittore {
+    font-size: x-large; 
+    padding: 10px;   
+}
+
+.container {
+    width: 100%;
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+    max-width: 1000px; /* Imposta la larghezza massima per evitare che sia troppo larga sui dispositivi grandi */
+}
+
+.card {
+    padding: 20px;
+}
